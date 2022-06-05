@@ -14,9 +14,11 @@
         class="d-flex justify-space-between align-center pa-0"
       >
         <div class="d-flex align-center">
-          <v-img src="../../assets/logo.png" width="160px" height="43px" />
+          <router-link to="/">
+            <v-img src="../../assets/logo.png" width="160px" height="43px" />
+          </router-link>
 
-          <v-menu offset-y>
+          <v-menu offset-y transition="scroll-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 class="ml-16"
@@ -24,21 +26,21 @@
                 outlined
                 v-bind="attrs"
                 v-on="on"
-                >Санкт-петербург</v-btn
+                :loading="!currentCity.name"
               >
+                {{ currentCity.name }}
+              </v-btn>
             </template>
 
             <v-list max-height="200">
-              <v-list-item
-                ><v-btn color="white" block depressed
-                  >Санкт-Петербург</v-btn
-                ></v-list-item
-              >
-              <v-list-item>
-                <v-btn color="white" block depressed>Москва</v-btn>
-              </v-list-item>
-              <v-list-item>
-                <v-btn color="white" block depressed>Челябинск</v-btn>
+              <v-list-item v-for="(item, index) of cities" :key="index">
+                <v-btn
+                  @click="setCurrentCity(item)"
+                  color="white"
+                  block
+                  depressed
+                  >{{ item.name }}</v-btn
+                >
               </v-list-item>
             </v-list>
           </v-menu>
@@ -54,7 +56,7 @@
       </v-container>
     </v-app-bar>
 
-    <v-main class="pa-0 ma-0">
+    <v-main style="width: 80%" class="ma-auto pa-0">
       <router-view />
     </v-main>
 

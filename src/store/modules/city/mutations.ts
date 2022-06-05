@@ -7,6 +7,7 @@ export const mutations: MutationTree<CitiyState> = {
     state.cities = cities;
   },
   [ADD_CURRENT_CITY](state: CitiyState, citiy: TCity): void {
+    localStorage.setItem("currentCityId", citiy.id.toString());
     state.currentCity = citiy;
   },
 };

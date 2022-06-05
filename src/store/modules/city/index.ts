@@ -5,14 +5,11 @@ import { mutations } from "./mutations";
 import { CitiyState } from "./types";
 
 export const state: CitiyState = {
-  currentCity: {
-    id: 1,
-    name: "Санкт-Петербург",
-  },
+  currentCity: null,
   cities: [],
 };
 
-export const user: Module<CitiyState, RootState> = {
+export const city: Module<CitiyState, RootState> = {
   state,
   getters,
   mutations,

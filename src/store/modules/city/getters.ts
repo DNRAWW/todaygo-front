@@ -3,11 +3,8 @@ import { GetterTree } from "vuex";
 import { CitiyState, TCity } from "./types";
 
 export const getters: GetterTree<CitiyState, RootState> = {
-  currentCityId(state: CitiyState): number {
-    return state.currentCity.id;
-  },
-  currentCityName(state: CitiyState): string {
-    return state.currentCity.name;
+  currentCity(state: CitiyState): TCity | null {
+    return state.currentCity;
   },
   cities(state: CitiyState): TCity[] {
     return state.cities;

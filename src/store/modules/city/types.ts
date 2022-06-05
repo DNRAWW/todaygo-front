@@ -1,5 +1,5 @@
 export type CitiyState = {
-  currentCity: TCity;
+  currentCity: TCity | null;
 
   cities: TCity[];
 };
