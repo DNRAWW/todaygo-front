@@ -46,12 +46,25 @@
           </v-menu>
         </div>
         <div>
-          <v-btn depressed color="#6100FF" class="mr-5" outlined small
-            >Регистрация</v-btn
+          <v-btn
+            :to="makeSignUpLink()"
+            depressed
+            color="#6100FF"
+            class="mr-5"
+            outlined
+            small
           >
-          <v-btn style="color: white" depressed color="#6100FF" small
-            >Войти</v-btn
+            Регистрация
+          </v-btn>
+          <v-btn
+            :to="makeLoginLink()"
+            style="color: white"
+            depressed
+            color="#6100FF"
+            small
           >
+            Войти
+          </v-btn>
         </div>
       </v-container>
     </v-app-bar>
@@ -59,24 +72,6 @@
     <v-main style="width: 80%" class="ma-auto pa-0">
       <router-view />
     </v-main>
-
-    <v-footer
-      height="100"
-      style="background-color: #6100ff; color: white"
-      absolute
-      v-if="false"
-    >
-      <v-container style="width: 80%" class="ma-auto pa-0">
-        <v-row class="ma-0" justify="space-between" align="center">
-          <img src="../../assets/logo_footer.png" width="200" height="60px" />
-          <router-link to="123">Помощь</router-link>
-          <router-link to="123">Контакты</router-link>
-        </v-row>
-        <v-row class="ma-0" justify="center">
-          <p class="ma-0 font-weight-bold">© 2022 Nikolay Yurchenko</p>
-        </v-row>
-      </v-container>
-    </v-footer>
   </div>
 </template>
 

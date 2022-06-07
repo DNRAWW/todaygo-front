@@ -7,6 +7,13 @@ import axios, { AxiosStatic } from "axios";
 
 Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.API_URL ?? "http://localhost:3000/";
+axios.defaults.withCredentials = true;
+axios.defaults.headers.get = {
+  authoriztion: localStorage.getItem("token") ?? "",
+};
+axios.defaults.headers.post = {
+  authoriztion: localStorage.getItem("token") ?? "",
+};
 declare module "vue/types/vue" {
   interface Vue {
     $axios: AxiosStatic;

@@ -1,4 +1,4 @@
-import { EVENT_VIEW } from "@/router/routes";
+import { EVENT_VIEW, LOGIN, SIGNUP } from "@/router/routes";
 import axios, { AxiosResponse } from "axios";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -13,9 +13,6 @@ export class EventList extends Vue {
   }
   private async getEvents() {
     const events: GetAllEventsResponse = await axios.get("events/get-all/0");
-
-    console.log(events);
-
     this.events.push(...events.data.data);
   }
   protected getTimeString(time: number): string {

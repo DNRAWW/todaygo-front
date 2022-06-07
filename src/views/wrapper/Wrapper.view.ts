@@ -3,6 +3,7 @@ import { TCity } from "@/store/modules/city/types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
+import { LOGIN, SIGNUP } from "@/router/routes";
 
 @Component({})
 export class Wrapper extends Vue {
@@ -51,6 +52,19 @@ export class Wrapper extends Vue {
     } else {
       this.setCurrentCity(this.cities[0]);
     }
+  }
+
+  protected makeLoginLink() {
+    return {
+      name: LOGIN,
+      params: null,
+    };
+  }
+  protected makeSignUpLink() {
+    return {
+      name: SIGNUP,
+      params: null,
+    };
   }
 }
 
