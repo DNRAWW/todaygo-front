@@ -42,12 +42,10 @@ export class Login extends Vue {
     } catch (e) {
       if (e instanceof AxiosError) {
         this.isWrongLogin = true;
+        this.wrongLoginText = "Сервер недоступен";
+        this.isLoading = false;
 
-        if (e.status && e.status === "404") {
-          this.wrongLoginText = "Сервер недоступен";
-          this.isLoading = false;
-          return;
-        }
+        return;
       }
 
       this.isWrongLogin = true;

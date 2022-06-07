@@ -101,9 +101,7 @@ export class Signup extends Vue {
     } catch (e) {
       if (e instanceof AxiosError) {
         this.isWrongReg = true;
-        if (e.status && e.status === "404") {
-          this.wrongRegText = "Сервер недоступен";
-        }
+        this.wrongRegText = "Сервер недоступен";
         this.isLoading = false;
         return;
       }
