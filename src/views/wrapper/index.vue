@@ -45,7 +45,7 @@
             </v-list>
           </v-menu>
         </div>
-        <div>
+        <div v-if="!visibleName">
           <v-btn
             :to="makeSignUpLink()"
             depressed
@@ -64,6 +64,12 @@
             small
           >
             Войти
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-btn plain>{{ visibleName }}</v-btn>
+          <v-btn @click="logout()" style="color: white" color="#6100FF">
+            Выйти
           </v-btn>
         </div>
       </v-container>

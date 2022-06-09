@@ -1,9 +1,14 @@
-import { ADD_CITIES, ADD_CURRENT_CITY } from "@/store/constants";
+import {
+  ADD_CITIES,
+  ADD_CURRENT_CITY,
+  ADD_VISIBLE_NAME,
+} from "@/store/constants";
 import { TCity } from "@/store/modules/city/types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
 import { LOGIN, SIGNUP } from "@/router/routes";
+import { meResponse } from "./types";
 
 @Component({})
 export class Wrapper extends Vue {
@@ -19,8 +24,12 @@ export class Wrapper extends Vue {
   private setCities(cities: TCity[]) {
     this.$store.commit(ADD_CITIES, cities);
   }
+  protected get visibleName(): TCity {
+    return this.$store.getters.visibleName;
+  }
 
   private mounted() {
+    this.getMe();
     this.setCities([
       {
         id: 1,
@@ -65,6 +74,27 @@ export class Wrapper extends Vue {
       name: SIGNUP,
       params: null,
     };
+  }
+
+  protected async getMe() {
+    if (!localStorage.getItem("token")) {
+      return;
+    }
+
+    try {
+      const me: meResponse = await axios.get("users/me");
+
+      if (me.data.person.visableName) {
+        this.$store.commit(ADD_VISIBLE_NAME, me.data.person.visableName);
+      }
+    } catch {
+      return;
+    }
+  }
+
+  protected logout() {
+    localStorage.removeItem("token");
+    this.$store.commit(ADD_VISIBLE_NAME, null);
   }
 }
 
