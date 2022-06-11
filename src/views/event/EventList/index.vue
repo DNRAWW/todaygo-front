@@ -64,7 +64,7 @@
         :key="index"
       >
         <v-row>
-          <v-col cols="6" class="pa-0 mr-10 ma-auto">
+          <v-col cols="6">
             <v-img
               class="ma-0"
               max-width="700"

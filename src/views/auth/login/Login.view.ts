@@ -1,8 +1,7 @@
-import { LOGIN, MAIN } from "@/router/routes";
+import { MAIN } from "@/router/routes";
 import axios, { AxiosError } from "axios";
 import Vue from "vue";
 import Component from "vue-class-component";
-import ru from "vuetify/src/locale/ru";
 
 @Component({})
 export class Login extends Vue {
@@ -55,6 +54,12 @@ export class Login extends Vue {
       return;
     }
     window.location.href = MAIN;
+  }
+
+  private listenerKeyDown(e: KeyboardEvent) {
+    if (e.key == "Enter") {
+      this.makeLogin();
+    }
   }
 }
 

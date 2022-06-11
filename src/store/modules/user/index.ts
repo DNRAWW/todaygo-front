@@ -6,6 +6,8 @@ import { UserState } from "./types";
 
 export const state: UserState = {
   visibleName: null,
+  role: null,
+  personId: null,
 };
 
 export const user: Module<UserState, RootState> = {

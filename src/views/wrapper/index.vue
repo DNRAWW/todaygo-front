@@ -18,7 +18,7 @@
             <v-img src="../../assets/logo.png" width="160px" height="43px" />
           </router-link>
 
-          <v-menu offset-y transition="scroll-y-transition">
+          <v-menu v-if="currentCity" offset-y transition="scroll-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 class="ml-16"
@@ -26,7 +26,6 @@
                 outlined
                 v-bind="attrs"
                 v-on="on"
-                :loading="!currentCity.name"
               >
                 {{ currentCity.name }}
               </v-btn>
@@ -45,6 +44,7 @@
             </v-list>
           </v-menu>
         </div>
+
         <div v-if="!visibleName">
           <v-btn
             :to="makeSignUpLink()"
@@ -67,15 +67,35 @@
           </v-btn>
         </div>
         <div v-else>
-          <v-btn plain>{{ visibleName }}</v-btn>
-          <v-btn @click="logout()" style="color: white" color="#6100FF">
-            Выйти
-          </v-btn>
+          <v-menu offset-y transition="scroll-y-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="text-none"
+                color="#6100FF"
+                outlined
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{ visibleName }}
+              </v-btn>
+            </template>
+
+            <v-list max-height="200">
+              <v-list-item
+                @click="makeProfileLink()"
+                v-if="role == 'ORGANIZER'"
+                link
+              >
+                Профиль
+              </v-list-item>
+              <v-list-item @click="logout()" link>Выйти</v-list-item>
+            </v-list>
+          </v-menu>
         </div>
       </v-container>
     </v-app-bar>
 
-    <v-main style="width: 80%" class="ma-auto pa-0">
+    <v-main style="width: 80%" class="mt-5 ma-auto pa-0">
       <router-view />
     </v-main>
   </div>

@@ -1,6 +1,8 @@
 import {
   ADD_CITIES,
   ADD_CURRENT_CITY,
+  ADD_ROLE,
+  ADD_PERSON_ID,
   ADD_VISIBLE_NAME,
 } from "@/store/constants";
 import { TCity } from "@/store/modules/city/types";
@@ -27,9 +29,11 @@ export class Wrapper extends Vue {
   protected get visibleName(): TCity {
     return this.$store.getters.visibleName;
   }
+  protected get role(): string {
+    return this.$store.getters.role;
+  }
 
-  private mounted() {
-    this.getMe();
+  private async mounted() {
     this.setCities([
       {
         id: 1,
@@ -44,6 +48,8 @@ export class Wrapper extends Vue {
         name: "Челябинск",
       },
     ]);
+
+    await this.getMe();
 
     const currentCityId = localStorage.getItem("currentCityId");
 
@@ -66,13 +72,11 @@ export class Wrapper extends Vue {
   protected makeLoginLink() {
     return {
       name: LOGIN,
-      params: null,
     };
   }
   protected makeSignUpLink() {
     return {
       name: SIGNUP,
-      params: null,
     };
   }
 
@@ -86,6 +90,8 @@ export class Wrapper extends Vue {
 
       if (me.data.person.visableName) {
         this.$store.commit(ADD_VISIBLE_NAME, me.data.person.visableName);
+        this.$store.commit(ADD_ROLE, me.data.person.role);
+        this.$store.commit(ADD_PERSON_ID, me.data.person.id);
       }
     } catch {
       return;

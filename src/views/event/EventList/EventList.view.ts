@@ -1,5 +1,5 @@
-import { EVENT_VIEW, LOGIN, SIGNUP } from "@/router/routes";
-import axios, { AxiosResponse } from "axios";
+import { EVENT_VIEW } from "@/router/routes";
+import axios from "axios";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { GetAllEventsResponse, TEvent } from "./types";
@@ -16,7 +16,7 @@ export class EventList extends Vue {
     this.events.push(...events.data.data);
   }
   protected getTimeString(time: number): string {
-    if (time / 59 > 60) {
+    if (time / 60 > 59) {
       return (time / 60 / 60).toFixed(2) + " ч";
     }
 

@@ -6,4 +6,10 @@ export const getters: GetterTree<UserState, RootState> = {
   visibleName(state: UserState) {
     return state.visibleName;
   },
+  role(state: UserState) {
+    return state.role;
+  },
+  personId(state: UserState) {
+    return state.personId;
+  },
 };
