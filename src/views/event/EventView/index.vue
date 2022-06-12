@@ -1,17 +1,29 @@
 <template>
   <v-container>
     <v-card v-if="event" class="mb-10 pa-5 rounded-lg">
-      <v-btn
-        color="#FF4242"
-        fab
-        class="mr-3"
-        v-if="role === 'ADMIN' || personId === event.organizerId"
-        @click="deleteEvent()"
-        width="50"
-        height="50"
-      >
-        <v-icon>mdi-delete-outline</v-icon>
-      </v-btn>
+      <v-flex>
+        <v-btn
+          color="#FF4242"
+          fab
+          class="mr-3"
+          v-if="role === 'ADMIN' || personId === event.organizerId"
+          @click="deleteEvent()"
+          width="50"
+          height="50"
+        >
+          <v-icon>mdi-delete-outline</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="personId == event.organizerId"
+          width="50"
+          height="50"
+          fab
+          @click="makeEditLink()"
+        >
+          <v-icon>mdi-pencil-outline</v-icon>
+        </v-btn>
+      </v-flex>
+
       <v-card-title>Очень крутое мероприятие</v-card-title>
 
       <v-row class="mt-5">
@@ -74,6 +86,11 @@
           </p>
         </v-col>
       </v-row>
+
+      <v-btn @click="participate()" color="success" v-if="!participating">
+        Пойду
+      </v-btn>
+      <v-btn @click="notParticipate()" color="#FF4242" v-else> Не пойду </v-btn>
     </v-card>
 
     <v-card v-else class="pa-5 rounded-lg">

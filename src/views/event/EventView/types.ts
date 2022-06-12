@@ -10,7 +10,7 @@ export type GetOneOrg = {
   };
 };
 
-export type TPerson = {
+export type TCommenter = {
   visableName: string;
 };
 
@@ -18,7 +18,7 @@ export type TComment = {
   comment: {
     id: number;
     text: string;
-    person: TPerson;
+    person: TCommenter;
   };
 };
 

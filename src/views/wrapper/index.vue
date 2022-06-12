@@ -21,7 +21,7 @@
           <v-menu v-if="currentCity" offset-y transition="scroll-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                class="ml-16"
+                class="ml-8"
                 color="#6100FF"
                 outlined
                 v-bind="attrs"
@@ -82,7 +82,7 @@
 
             <v-list max-height="200">
               <v-list-item
-                @click="makeProfileLink()"
+                :to="makeProfileLink()"
                 v-if="role == 'ORGANIZER'"
                 link
               >

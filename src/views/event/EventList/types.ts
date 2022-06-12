@@ -16,5 +16,6 @@ export type TEvent = {
 export type GetAllEventsResponse = {
   data: {
     data: TEvent[];
+    count: number;
   };
 };

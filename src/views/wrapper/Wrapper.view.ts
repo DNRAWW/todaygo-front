@@ -9,7 +9,7 @@ import { TCity } from "@/store/modules/city/types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
-import { LOGIN, SIGNUP } from "@/router/routes";
+import { LOGIN, PERSON_VIEW, SIGNUP } from "@/router/routes";
 import { meResponse } from "./types";
 
 @Component({})
@@ -31,6 +31,9 @@ export class Wrapper extends Vue {
   }
   protected get role(): string {
     return this.$store.getters.role;
+  }
+  protected get personId(): string {
+    return this.$store.getters.personId;
   }
 
   private async mounted() {
@@ -77,6 +80,14 @@ export class Wrapper extends Vue {
   protected makeSignUpLink() {
     return {
       name: SIGNUP,
+    };
+  }
+  protected makeProfileLink() {
+    return {
+      name: PERSON_VIEW,
+      params: {
+        id: this.personId,
+      },
     };
   }
 

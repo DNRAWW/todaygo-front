@@ -31,6 +31,7 @@ export class EventView extends Vue {
   $refs!: {
     commentForm: HTMLFormElement;
   };
+  protected participating = false;
 
   protected get visibleName() {
     return this.$store.getters.visibleName;
@@ -47,6 +48,7 @@ export class EventView extends Vue {
     if (this.event) {
       await this.getOrg(this.event.organizerId);
       await this.getComments(0);
+      await this.checkParticipation();
     }
   }
 
@@ -147,6 +149,47 @@ export class EventView extends Vue {
       });
 
       window.location.href = "/";
+    } catch {
+      return;
+    }
+  }
+
+  protected async participate() {
+    if (!this.event) {
+      return;
+    }
+    try {
+      await axios.post("/events/participate", {
+        eventId: this.eventId,
+      });
+      this.participating = true;
+      this.event.numberOfParticipants++;
+    } catch {
+      return;
+    }
+  }
+  protected async notParticipate() {
+    if (!this.event) {
+      return;
+    }
+    try {
+      await axios.post("/events/not-participate", {
+        eventId: this.eventId,
+      });
+      this.participating = false;
+      this.event.numberOfParticipants--;
+    } catch {
+      return;
+    }
+  }
+
+  protected async checkParticipation() {
+    try {
+      const participation: { data: boolean } = await axios.get(
+        `/events/check-participation/${this.eventId}`
+      );
+
+      this.participating = participation.data;
     } catch {
       return;
     }
