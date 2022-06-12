@@ -71,8 +71,9 @@
               class="mb-2"
               label="Дата рождения"
               readonly
-              :value="dateOfBirth"
+              :value="formatedDate(dateOfBirth)"
               v-on="on"
+              filled
               @focus="fromDateMenu = true"
               :rules="dateRules"
               clearable

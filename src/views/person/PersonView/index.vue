@@ -13,16 +13,16 @@
               width="50"
               height="50"
               fab
-              @click="makeEditLink()"
+              :to="makeEditLink()"
             >
               <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
           </v-layout>
           <v-card-title class="pa-0 ml-2 mt-5">
-            {{ person.orgName }}
+            {{ person.visableName }}
           </v-card-title>
           <v-card-title class="pa-0 ml-2 mt-5">
-            {{ person.visableName }}
+            {{ person.orgName }}
           </v-card-title>
         </v-col>
       </v-row>
@@ -35,7 +35,7 @@
       <v-layout row wrap class="justify-space-between mb-8">
         <h2>Мероприятия</h2>
 
-        <v-btn v-if="id == personId">
+        <v-btn v-if="id == personId" @click="makeCreateEventLink()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-layout>

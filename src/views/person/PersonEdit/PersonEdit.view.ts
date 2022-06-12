@@ -1,17 +1,18 @@
-import { LOGIN } from "@/router/routes";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { TUser, userResponse } from "./types";
 
 @Component({})
-export class Signup extends Vue {
+export class PersonEdit extends Vue {
+  protected user: TUser | null = null;
   protected allowedDates = (v: string) => new Date(v) < new Date();
   protected fromDateMenu = false;
-  protected formValid = false;
-  protected login: string | null = null;
+  protected personFormValid = false;
+  protected userFormValid = false;
   protected password: string | null = null;
   protected password2: string | null = null;
-  protected visibleName: string | null = null;
+  protected newVisibleName: string | null = null;
   protected firstName: string | null = null;
   protected lastName: string | null = null;
   protected surName: string | null = null;
@@ -23,6 +24,11 @@ export class Signup extends Vue {
 
   protected loginTaken = "";
   protected nameTaken = "";
+  protected wrongPassword = "";
+
+  protected get visibleName() {
+    return this.$store.getters.visibleName;
+  }
 
   protected loginRules = [
     (v: string) => !!v || "Поле обязательно для заполнения",
@@ -53,78 +59,70 @@ export class Signup extends Vue {
     (v: string) => (v && v.length >= 5) || "Имя должно быть больше 4 символов",
   ];
 
-  protected async register() {
+  protected dialog = false;
+
+  private async mounted() {
+    await this.getMe();
+    return;
+  }
+
+  protected async getMe() {
     this.isLoading = true;
-    if (this.password !== this.password2) {
-      this.isWrongReg = true;
-      this.wrongRegText = "Пароли должны совпадать";
-      this.isLoading = false;
-      return;
-    }
-
-    const isLoginTaken: { data: boolean } = await axios.post(
-      `/users/is-login-taken`,
-      {
-        login: this.login,
-      }
-    );
-    if (isLoginTaken.data) {
-      this.loginTaken = "Логин уже занят";
-    }
-
-    const isNameTaken: { data: boolean } = await axios.post(
-      `/users/is-visible-name-taken`,
-      {
-        name: this.visibleName,
-      }
-    );
-    if (isNameTaken.data) {
-      this.nameTaken = "Имя уже занято";
-    }
-
-    if (isNameTaken.data || isLoginTaken.data) {
-      this.isLoading = false;
-      return;
+    if (!localStorage.getItem("token")) {
+      window.location.href = "/login";
     }
 
     try {
-      await axios.post("/users/register", {
-        login: this.login,
-        password: this.password,
+      const me: userResponse = await axios.get("users/me");
+
+      this.user = me.data;
+
+      this.newVisibleName = me.data.person.visableName;
+      this.firstName = me.data.person.firstName;
+      this.lastName = me.data.person.lastName;
+      this.surName = me.data.person.surName;
+      this.dateOfBirth = me.data.person.dateOfBirth;
+
+      this.isLoading = false;
+    } catch {
+      window.location.href = "/login";
+    }
+  }
+
+  protected async changePerson() {
+    try {
+      this.dialog = false;
+
+      if (this.newVisibleName !== this.visibleName) {
+        const isNameTaken: { data: boolean } = await axios.post(
+          `/users/is-visible-name-taken`,
+          {
+            name: this.visibleName,
+          }
+        );
+
+        if (isNameTaken.data) {
+          this.nameTaken = "Имя уже занято";
+          return;
+        }
+      }
+
+      await axios.post("/people/change", {
+        id: this.user?.person.id,
         firstName: this.firstName,
         lastName: this.lastName,
         surName: this.surName,
-        visibleName: this.visibleName,
+        visableName: this.visibleName,
         dateOfBirth: this.dateOfBirth,
       });
+
+      window.location.href = `/person/${this.user?.person.id}`;
     } catch (e) {
-      if (e instanceof AxiosError) {
-        this.isWrongReg = true;
-        this.wrongRegText = "Сервер недоступен";
-        this.isLoading = false;
-        return;
-      }
-
-      this.isWrongReg = true;
-      this.wrongRegText = "Что-то пошло не так";
-      this.isLoading = false;
-
-      return;
-    }
-
-    window.location.href = LOGIN;
-  }
-
-  private listenerKeyDown(e: KeyboardEvent) {
-    if (e.key == "Enter") {
-      this.register();
+      this.dialog = false;
     }
   }
 
-  protected formatedDate(unformatedDate: Date | null) {
-    if (!unformatedDate) {
-      return;
-    }
+  protected formatedDate(unformatedDate: Date): string {
     const date = new Date(unformatedDate);
     const result = date.toLocaleDateString("ru");
 
@@ -132,4 +130,4 @@ export class Signup extends Vue {
   }
 }
 
-export default Signup;
+export default PersonEdit;

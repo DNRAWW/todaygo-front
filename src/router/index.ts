@@ -6,6 +6,7 @@ import {
   LOGIN,
   MAIN,
   PERSON_VIEW,
+  PROFILE_EDIT,
   SIGNUP,
 } from "./routes";
 import MainWrapper from "../views/wrapper/index.vue";
@@ -14,6 +15,7 @@ import EventView from "../views/event/EventView/index.vue";
 import Login from "../views/auth/login/index.vue";
 import SignUp from "../views/auth/signup/index.vue";
 import PersonView from "../views/person/PersonView/index.vue";
+import PersonEdit from "../views/person/PersonEdit/index.vue";
 
 Vue.use(VueRouter);
 
@@ -47,6 +49,11 @@ const routes: Array<RouteConfig> = [
         path: PERSON_VIEW,
         name: PERSON_VIEW,
         component: PersonView,
+      },
+      {
+        path: PROFILE_EDIT,
+        name: PROFILE_EDIT,
+        component: PersonEdit,
       },
     ],
   },
