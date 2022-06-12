@@ -18,6 +18,24 @@ export class PersonView extends Vue {
   protected get role() {
     return this.$store.getters.role;
   }
+  protected componentKey = 0;
+
+  private created() {
+    this.$watch(
+      () => this.$route.params,
+      async (toParams, previousParams) => {
+        if (toParams != previousParams) {
+          this.id = toParams.id;
+          this.person = null;
+          const newPerson = await this.getPerson();
+
+          if (newPerson && newPerson.orgName) {
+            await this.getEvents(0);
+          }
+        }
+      }
+    );
+  }
 
   private async mounted() {
     await this.getPerson();
@@ -45,6 +63,8 @@ export class PersonView extends Vue {
       const person: GetPerson = await axios.get(`/people/get-one/${this.id}`);
 
       this.person = person.data;
+
+      return person.data;
     } catch {
       return;
     }

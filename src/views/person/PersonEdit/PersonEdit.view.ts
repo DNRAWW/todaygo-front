@@ -11,7 +11,8 @@ export class PersonEdit extends Vue {
   protected personFormValid = false;
   protected userFormValid = false;
   protected password: string | null = null;
-  protected password2: string | null = null;
+  protected newPassword: string | null = null;
+  protected newPassword2: string | null = null;
   protected newVisibleName: string | null = null;
   protected firstName: string | null = null;
   protected lastName: string | null = null;
@@ -22,7 +23,6 @@ export class PersonEdit extends Vue {
   protected wrongRegText = "";
   protected isLoading = false;
 
-  protected loginTaken = "";
   protected nameTaken = "";
   protected wrongPassword = "";
 
@@ -48,6 +48,17 @@ export class PersonEdit extends Vue {
       (v && v.length <= 50) || "Пароль не должен превышать 25 символов",
     (v: string) =>
       (v && v.length > 7) || "Пароль должен быть больше 7 символов",
+  ];
+  protected passwordsMatch() {
+    if (this.newPassword === this.newPassword2) {
+      return true;
+    }
+
+    return false;
+  }
+  protected secondPasswordRules = [
+    (v: string) => !!v || "Поле обязательно для заполнения",
+    (v: string) => (v && this.passwordsMatch()) || "Пароли должны совпадать",
   ];
   protected dateRules = [
     (v: string) => !!v || "Поле обязательно для заполнения",
@@ -119,6 +130,19 @@ export class PersonEdit extends Vue {
       window.location.href = `/person/${this.user?.person.id}`;
     } catch (e) {
       this.dialog = false;
+    }
+  }
+
+  protected async changePassword() {
+    try {
+      await axios.post("/users/change-password", {
+        password: this.password,
+        newPassword: this.newPassword,
+      });
+      window.location.href = `/person/${this.user?.person.id}`;
+    } catch {
+      this.wrongPassword = "Неправильный пароль";
+      return;
     }
   }
 

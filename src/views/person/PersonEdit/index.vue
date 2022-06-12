@@ -111,7 +111,7 @@
           type="password"
           placeholder="Новый пароль"
           filled
-          v-model="password"
+          v-model="newPassword"
           :rules="passwordRules"
         ></v-text-field>
         <v-text-field
@@ -119,15 +119,15 @@
           type="password"
           placeholder="Повторите новый пароль"
           filled
-          v-model="password2"
-          :rules="passwordRules"
+          v-model="newPassword2"
+          :rules="secondPasswordRules"
         ></v-text-field>
 
         <v-flex class="d-flex justify-center mb-2">
           <v-btn
             :loading="isLoading"
             :disabled="!userFormValid"
-            @click="register()"
+            @click="changePassword()"
           >
             Сохранить
           </v-btn>

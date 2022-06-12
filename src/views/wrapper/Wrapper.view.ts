@@ -112,6 +112,7 @@ export class Wrapper extends Vue {
   protected logout() {
     localStorage.removeItem("token");
     this.$store.commit(ADD_VISIBLE_NAME, null);
+    window.location.href = "/";
   }
 }
 
