@@ -1,4 +1,4 @@
-import { EVENT_VIEW, PROFILE_EDIT } from "@/router/routes";
+import { EVENT_CREATE, EVENT_VIEW, PROFILE_EDIT } from "@/router/routes";
 import { GetAllEventsResponse, TEvent } from "@/views/event/EventList/types";
 import axios from "axios";
 import Vue from "vue";
@@ -81,6 +81,12 @@ export class PersonView extends Vue {
   protected makeEditLink() {
     return {
       name: PROFILE_EDIT,
+    };
+  }
+
+  protected makeCreateEventLink() {
+    return {
+      name: EVENT_CREATE,
     };
   }
 

@@ -2,6 +2,7 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import { TEvent } from "../EventList/types";
 import axios from "axios";
+import moment from "moment";
 import {
   CreateCommentResponse,
   GetCommentsResponse,
@@ -9,7 +10,7 @@ import {
   GetOneOrg,
   TComment,
 } from "./types";
-import { PERSON_VIEW } from "@/router/routes";
+import { EVENT_EDIT, PERSON_VIEW } from "@/router/routes";
 
 @Component({})
 export class EventView extends Vue {
@@ -205,12 +206,32 @@ export class EventView extends Vue {
     return result;
   }
 
-  protected getTimeString(time: number): string {
-    if (time / 60 > 59) {
-      return (time / 60 / 60).toFixed(2) + " ч";
+  protected getTimeString(duration: number): string {
+    function numTime(
+      value: number,
+      words: [string, string, string]
+    ): string | null {
+      value = Math.abs(value) % 100;
+      const num = value % 10;
+      if (value === 0) {
+        return null;
+      }
+      if (value > 10 && value < 20) {
+        return `${value} ${words[2]}`;
+      }
+      if (num > 1 && num < 5) {
+        return `${value} ${words[1]}`;
+      }
+      if (num == 1) {
+        return `${value} ${words[0]}`;
+      }
+      return `${value} ${words[2]}`;
     }
 
-    return (time / 60).toFixed(2) + " мин";
+    const time = moment.utc(duration * 1000);
+    const hours = numTime(+time.format("HH"), ["час", "часа", "часов"]);
+    const minutes = numTime(+time.format("m"), ["минута", "минуты", "минут"]);
+    return [hours, minutes].filter(Boolean).join(", ");
   }
 
   protected makeOrgLink(id: number) {
@@ -218,6 +239,15 @@ export class EventView extends Vue {
       name: PERSON_VIEW,
       params: {
         id: id,
+      },
+    };
+  }
+
+  protected makeEditLink() {
+    return {
+      name: EVENT_EDIT,
+      params: {
+        id: this.eventId,
       },
     };
   }

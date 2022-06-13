@@ -35,7 +35,7 @@
       <v-layout row wrap class="justify-space-between mb-8">
         <h2>Мероприятия</h2>
 
-        <v-btn v-if="id == personId" @click="makeCreateEventLink()">
+        <v-btn v-if="id == personId" :to="makeCreateEventLink()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-layout>
@@ -62,7 +62,7 @@
           <v-card-text class="pa-0">
             {{ formatedDate(item.date) }}
           </v-card-text>
-          <v-card-title class="pa-0">Очень крутое мероприятие</v-card-title>
+          <v-card-title class="pa-0">{{ item.name }}</v-card-title>
         </v-card>
       </v-layout>
 

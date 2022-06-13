@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import {
+  EVENT_CREATE,
+  EVENT_EDIT,
   EVENT_LIST,
   EVENT_VIEW,
   LOGIN,
@@ -16,6 +18,7 @@ import Login from "../views/auth/login/index.vue";
 import SignUp from "../views/auth/signup/index.vue";
 import PersonView from "../views/person/PersonView/index.vue";
 import PersonEdit from "../views/person/PersonEdit/index.vue";
+import EventEdit from "../views/event/EventEdit/index.vue";
 
 Vue.use(VueRouter);
 
@@ -44,6 +47,16 @@ const routes: Array<RouteConfig> = [
         path: EVENT_VIEW,
         name: EVENT_VIEW,
         component: EventView,
+      },
+      {
+        path: EVENT_CREATE,
+        name: EVENT_CREATE,
+        component: EventEdit,
+      },
+      {
+        path: EVENT_EDIT,
+        name: EVENT_EDIT,
+        component: EventEdit,
       },
       {
         path: PERSON_VIEW,

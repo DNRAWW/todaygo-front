@@ -18,7 +18,7 @@
           width="50"
           height="50"
           fab
-          @click="makeEditLink()"
+          :to="makeEditLink()"
         >
           <v-icon>mdi-pencil-outline</v-icon>
         </v-btn>
@@ -87,10 +87,14 @@
         </v-col>
       </v-row>
 
-      <v-btn @click="participate()" color="success" v-if="!participating">
-        Пойду
-      </v-btn>
-      <v-btn @click="notParticipate()" color="#FF4242" v-else> Не пойду </v-btn>
+      <div class="mt-5" v-if="personId">
+        <v-btn @click="participate()" color="success" v-if="!participating">
+          Пойду
+        </v-btn>
+        <v-btn @click="notParticipate()" color="#FF4242" v-else>
+          Не пойду
+        </v-btn>
+      </div>
     </v-card>
 
     <v-card v-else class="pa-5 rounded-lg">
