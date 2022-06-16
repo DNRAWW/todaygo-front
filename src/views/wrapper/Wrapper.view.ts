@@ -10,7 +10,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
 import { LOGIN, PERSON_VIEW, SIGNUP } from "@/router/routes";
-import { meResponse } from "./types";
+import { GetAllCititesResponse, meResponse } from "./types";
 
 @Component({})
 export class Wrapper extends Vue {
@@ -36,21 +36,16 @@ export class Wrapper extends Vue {
     return this.$store.getters.personId;
   }
 
+  protected async getCities() {
+    const cities: GetAllCititesResponse = await axios.get("cities/get-all");
+
+    this.setCities(cities.data);
+
+    return;
+  }
+
   private async mounted() {
-    this.setCities([
-      {
-        id: 1,
-        name: "Санкт-Петербург",
-      },
-      {
-        id: 2,
-        name: "Москва",
-      },
-      {
-        id: 3,
-        name: "Челябинск",
-      },
-    ]);
+    await this.getCities();
 
     await this.getMe();
 

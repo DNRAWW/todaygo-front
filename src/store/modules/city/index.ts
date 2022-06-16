@@ -5,6 +5,7 @@ import { mutations } from "./mutations";
 import { CitiyState } from "./types";
 
 export const state: CitiyState = {
+  currentCityId: <number | null>localStorage.getItem("currentCityId") ?? 1,
   currentCity: null,
   cities: [],
 };

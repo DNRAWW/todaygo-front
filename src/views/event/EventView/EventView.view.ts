@@ -72,7 +72,6 @@ export class EventView extends Vue {
       if (comments.data.count > 0) {
         this.comments.push(...comments.data.data);
         this.totalComments = comments.data.count;
-        console.log(comments.data.count, this.totalComments);
         this.displayedComments += 15;
         return;
       }
@@ -248,6 +247,15 @@ export class EventView extends Vue {
       name: EVENT_EDIT,
       params: {
         id: this.eventId,
+      },
+    };
+  }
+
+  protected makePersonLink(comment: TComment) {
+    return {
+      name: PERSON_VIEW,
+      params: {
+        id: comment.comment.id,
       },
     };
   }

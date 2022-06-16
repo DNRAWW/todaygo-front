@@ -24,7 +24,10 @@
         </v-btn>
       </v-flex>
 
-      <v-card-title>Очень крутое мероприятие</v-card-title>
+      <v-layout row>
+        <v-card-title class="pr-1">{{ event.name }} -</v-card-title>
+        <v-card-title class="pl-0">{{ event.city.name }}</v-card-title>
+      </v-layout>
 
       <v-row class="mt-5">
         <v-col class="pt-0">
@@ -139,7 +142,12 @@
       >
         <v-flex class="d-flex align-center justify-space-between">
           <v-card-title>
-            {{ item.comment.person.visableName }}
+            <router-link
+              class="text-decoration-none"
+              :to="makePersonLink(item)"
+            >
+              {{ item.comment.person.visableName }}
+            </router-link>
           </v-card-title>
           <v-btn
             color="#FF4242"

@@ -1,36 +1,46 @@
 <template>
   <v-container class="px-0 py-6">
     <v-row align="center">
-      <v-col cols="5">
+      <v-col cols="4">
         <v-row align="center">
           <v-col>
-            <span
-              class="font-weight-bold text-md-body-2 text-lg-h6 text-decoration-underline"
-              >Сегодня</span
+            <v-btn
+              plain
+              class="font-weight-bold text-md-body-2 text-lg-h6 text-none text-decoration-underline"
+              @click="
+                getByDate(today, 0);
+                todayButton = true;
+              "
             >
+              Сегодня
+            </v-btn>
           </v-col>
           <v-col>
-            <span
-              class="font-weight-bold text-md-body-2 text-lg-h6 text-md text-decoration-underline"
-              >Завтра</span
+            <v-btn
+              plain
+              class="font-weight-bold text-md-body-2 text-lg-h6 text-none text-decoration-underline"
+              @click="
+                getByDate(tomorrow, 0);
+                tomorrowButton = true;
+              "
             >
+              Завтра
+            </v-btn>
           </v-col>
           <v-col>
-            <span
-              class="font-weight-bold text-md-body-2 text-lg-h6 text-decoration-underline"
-              >Выходные</span
+            <v-btn
+              plain
+              class="font-weight-bold text-md-body-2 text-lg-h6 text-none text-decoration-underline"
+              @click="getEvents(0)"
             >
-          </v-col>
-          <v-col>
-            <span
-              class="font-weight-bold text-md-body-2 text-lg-h6 text-decoration-underline"
-              >Неделя</span
-            >
+              Все
+            </v-btn>
           </v-col>
         </v-row>
       </v-col>
-      <v-col align-items="center" cols="5">
+      <v-col align-items="center">
         <v-text-field
+          v-model="searchQuery"
           placeholder="Поиск..."
           filled
           rounded
@@ -38,6 +48,7 @@
           hide-details
         ></v-text-field>
       </v-col>
+      <v-btn small @click="search(0)"><v-icon>mdi-magnify</v-icon></v-btn>
       <v-col cols="2" class="d-flex justify-end">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -51,7 +62,10 @@
             </v-btn>
           </template>
 
-          <v-date-picker></v-date-picker>
+          <v-date-picker
+            @input="getByDate(date, 0)"
+            v-model="date"
+          ></v-date-picker>
         </v-menu>
       </v-col>
     </v-row>
@@ -101,6 +115,12 @@
           </v-col>
         </v-row>
       </v-card>
+      <v-btn
+        @click="getMore(displayedEvents)"
+        v-if="totalEvents > displayedEvents"
+        class="d-block ma-auto"
+        >Загрузить ещё</v-btn
+      >
     </v-container>
   </v-container>
 </template>

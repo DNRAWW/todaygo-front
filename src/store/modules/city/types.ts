@@ -1,4 +1,6 @@
 export type CitiyState = {
+  currentCityId: number | null;
+
   currentCity: TCity | null;
 
   cities: TCity[];

@@ -11,6 +11,10 @@ export type TEvent = {
   organizerId: number;
   numberOfParticipants: number;
   price: number;
+  city: {
+    id: number;
+    name: string;
+  };
 };
 
 export type GetAllEventsResponse = {
@@ -18,4 +22,9 @@ export type GetAllEventsResponse = {
     data: TEvent[];
     count: number;
   };
+};
+
+export type DateParams = {
+  min: string | null;
+  max: string | null;
 };

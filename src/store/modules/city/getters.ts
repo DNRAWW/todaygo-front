@@ -9,4 +9,7 @@ export const getters: GetterTree<CitiyState, RootState> = {
   cities(state: CitiyState): TCity[] {
     return state.cities;
   },
+  currentCityId(state: CitiyState) {
+    return state.currentCityId;
+  },
 };
