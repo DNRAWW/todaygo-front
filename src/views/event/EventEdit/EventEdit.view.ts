@@ -62,7 +62,7 @@ export class EventEdit extends Vue {
     (v: string) => !!v || "Поле обязательно для заполнения",
     (v: string) =>
       (v && v.length <= 300) || "Не должено превышать 300 символов",
-    (v: string) => (v && v.length >= 20) || "Должно быть больше 19 символов",
+    (v: string) => (v && v.length >= 10) || "Должно быть больше 9 символов",
   ];
 
   protected priceRules = [
