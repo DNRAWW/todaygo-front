@@ -33,6 +33,16 @@
           filled
           :rules="descriptionRules"
         ></v-text-field>
+        <v-file-input
+          v-model="image"
+          :rules="imageRules"
+          accept="image/png, image/jpeg, image/bmp"
+          prepend-icon=""
+          filled
+          dense
+          label="Картинка мероприятия"
+          clearable
+        ></v-file-input>
         <v-text-field
           label="Адрес"
           v-model="address"

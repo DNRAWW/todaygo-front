@@ -5,8 +5,10 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import axios, { AxiosStatic } from "axios";
 
+export const baseURL = process.env.API_URL ?? "http://localhost:3000/";
+
 Vue.config.productionTip = false;
-axios.defaults.baseURL = process.env.API_URL ?? "http://localhost:3000/";
+axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.get = {
   authorization: localStorage.getItem("token") ?? "",

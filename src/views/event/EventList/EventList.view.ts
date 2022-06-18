@@ -4,6 +4,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Watch } from "vue-property-decorator";
 import { GetAllEventsResponse, TEvent } from "./types";
+import { baseURL } from "../../../main";
 
 @Component({})
 export class EventList extends Vue {
@@ -12,6 +13,7 @@ export class EventList extends Vue {
   protected tomorrow = "";
   protected selectedDate = "";
   protected searchQuery = "";
+  protected apiURL = baseURL;
 
   protected displayedEvents = 0;
   protected totalEvents = 0;

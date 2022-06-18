@@ -84,7 +84,7 @@
               max-width="700"
               min-width="200"
               min-height="400"
-              src="../../../assets/event_image.png"
+              :src="apiURL + item.attachment.path"
             ></v-img>
           </v-col>
           <v-col>

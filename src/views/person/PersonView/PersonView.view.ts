@@ -4,9 +4,11 @@ import axios from "axios";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { GetPerson, TPerson } from "./types";
+import { baseURL } from "@/main";
 
 @Component({})
 export class PersonView extends Vue {
+  protected apiURL = baseURL;
   protected id = this.$route.params.id;
   protected person: TPerson | null = null;
   protected events: TEvent[] = [];

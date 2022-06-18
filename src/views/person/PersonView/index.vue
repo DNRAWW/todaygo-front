@@ -57,7 +57,7 @@
           <v-img
             max-height="300"
             max-width="300"
-            src="../../../assets/event_image.png"
+            :src="apiURL + item.attachment.path"
           ></v-img>
           <v-card-text class="pa-0">
             {{ formatedDate(item.date) }}

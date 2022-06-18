@@ -11,9 +11,10 @@ import {
   TComment,
 } from "./types";
 import { EVENT_EDIT, PERSON_VIEW } from "@/router/routes";
-
+import { baseURL } from "../../../main";
 @Component({})
 export class EventView extends Vue {
+  protected apiURL = baseURL;
   protected event: TEvent | null = null;
   protected orgName: string | null = "";
   protected eventId = this.$route.params.id;

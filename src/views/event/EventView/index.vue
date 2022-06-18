@@ -2,17 +2,39 @@
   <v-container>
     <v-card v-if="event" class="mb-10 pa-5 rounded-lg">
       <v-flex>
-        <v-btn
-          color="#FF4242"
-          fab
-          class="mr-3"
+        <v-dialog
           v-if="role === 'ADMIN' || personId === event.organizerId"
-          @click="deleteEvent()"
-          width="50"
-          height="50"
+          max-width="400"
+          v-model="dialog"
         >
-          <v-icon>mdi-delete-outline</v-icon>
-        </v-btn>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="#FF4242"
+              fab
+              class="mr-3"
+              width="50"
+              height="50"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-delete-outline</v-icon>
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title>Вы уверены?</v-card-title>
+            <v-divider class="mb-2"></v-divider>
+            <v-card-actions class="justify-space-between">
+              <v-btn color="blue darken-1" text @click="deleteEvent()">
+                Да
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >Нет</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-btn
           v-if="personId == event.organizerId"
           width="50"
@@ -37,7 +59,7 @@
             max-height="300"
             max-width="500"
             min-width="200"
-            src="../../../assets/event_image.png"
+            :src="apiURL + event.attachment.path"
           ></v-img>
         </v-col>
         <v-col>

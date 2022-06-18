@@ -20,6 +20,7 @@ export class EventEdit extends Vue {
   protected time = "";
   protected stringDate = "";
   protected cityId: number | null = null;
+  protected image: File | null = null;
 
   protected dateToString(date: Date) {
     this.stringDate = <string>this.formatedDate(date);
@@ -99,6 +100,12 @@ export class EventEdit extends Vue {
     { name: "Культурное", value: "CULTURAL" },
   ];
 
+  protected imageRules = [
+    (v: File) => this.isEdit || !!v || "Поле обязательно для заполнения",
+    (v: File) =>
+      !v || v.size < 5000000 || "Размер картинки должен быть меньше 5 мб",
+  ];
+
   protected fromDateMenu = false;
   protected menu2 = false;
   protected menu3 = false;
@@ -153,26 +160,76 @@ export class EventEdit extends Vue {
     if (!this.price) {
       return;
     }
+
     this.isLoading = true;
+
     if (this.isEdit) {
-      await axios.post("/events/change", {
-        id: this.$route.params.id,
-        name: this.name,
-        maxNumberOfParticipants: this.maxNumberOfParticipants,
-        tags: this.tags,
-        description: this.description,
-        price: this.price * 100,
-        address: this.address,
-        date: this.date + "T" + this.time,
-        duration: this.timeStringToSeconds(this.duration),
-        cityId: this.cityId,
-      });
+      if (!this.image) {
+        await axios.post("/events/change", {
+          id: this.$route.params.id,
+          name: this.name,
+          maxNumberOfParticipants: this.maxNumberOfParticipants,
+          tags: this.tags,
+          description: this.description,
+          price: this.price * 100,
+          address: this.address,
+          date: this.date + "T" + this.time,
+          duration: this.timeStringToSeconds(this.duration),
+          cityId: this.cityId,
+        });
+      } else {
+        const image = new FormData();
+
+        image.append("image", this.image);
+
+        const imageId: { data: number } = await axios.post(
+          "/attachments/upload",
+          image,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
+
+        await axios.post("/events/change", {
+          id: this.$route.params.id,
+          name: this.name,
+          maxNumberOfParticipants: this.maxNumberOfParticipants,
+          tags: this.tags,
+          description: this.description,
+          price: this.price * 100,
+          address: this.address,
+          date: this.date + "T" + this.time,
+          duration: this.timeStringToSeconds(this.duration),
+          cityId: this.cityId,
+          attachmentId: imageId.data,
+        });
+      }
 
       this.isLoading = false;
       window.location.href = `/person/${this.personId}`;
 
       return;
     }
+
+    if (!this.image) {
+      return;
+    }
+
+    const image = new FormData();
+
+    image.append("image", this.image);
+
+    const imageId: { data: number } = await axios.post(
+      "/attachments/upload",
+      image,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+    );
 
     await axios.post("/events/create", {
       name: this.name,
@@ -184,6 +241,7 @@ export class EventEdit extends Vue {
       date: this.date + "T" + this.time,
       duration: this.timeStringToSeconds(this.duration),
       cityId: this.cityId,
+      attachmentId: imageId.data,
     });
 
     window.location.href = `/person/${this.personId}`;
