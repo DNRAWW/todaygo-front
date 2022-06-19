@@ -3,7 +3,8 @@
     <v-card class="auth-form rounded-xl">
       <v-img src="../../../assets/logo.png" width="50%" class="ma-auto"></v-img>
       <p class="mx-3">
-        Чтобы получить права организатора пишите на почту: <b>почта</b>
+        Чтобы получить права организатора пишите на почту:
+        <b>yur4enko.nick@yandex.ru</b>
       </p>
       <v-form v-model="formValid" ref="form" class="mt-10 mx-10">
         <v-text-field
