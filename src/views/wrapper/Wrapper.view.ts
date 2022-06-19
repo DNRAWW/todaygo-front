@@ -9,7 +9,7 @@ import { TCity } from "@/store/modules/city/types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
-import { LOGIN, PERSON_VIEW, SIGNUP } from "@/router/routes";
+import { ADMIN_PANEL, LOGIN, PERSON_VIEW, SIGNUP } from "@/router/routes";
 import { GetAllCititesResponse, meResponse } from "./types";
 
 @Component({})
@@ -85,6 +85,11 @@ export class Wrapper extends Vue {
       },
     };
   }
+  protected makeAdminLink() {
+    return {
+      name: ADMIN_PANEL,
+    };
+  }
 
   protected async getMe() {
     if (!localStorage.getItem("token")) {
@@ -99,7 +104,14 @@ export class Wrapper extends Vue {
         this.$store.commit(ADD_ROLE, me.data.person.role);
         this.$store.commit(ADD_PERSON_ID, me.data.person.id);
       }
+
+      if (me.data.person.role !== "ADMIN" && this.$route.name === ADMIN_PANEL) {
+        window.location.href = "/";
+      }
     } catch {
+      if (this.$route.name === ADMIN_PANEL) {
+        window.location.href = "/";
+      }
       return;
     }
   }

@@ -52,9 +52,15 @@ export class PersonView extends Vue {
         `events/get-all-by-org/${this.id}/${skip}`
       );
 
-      this.events.push(...events.data.data);
-      this.totalEvents = events.data.count;
-      this.eventsDisplayed += 10;
+      if (skip === 0) {
+        this.events = events.data.data;
+        this.totalEvents = events.data.count;
+        this.eventsDisplayed = 10;
+      } else {
+        this.events.push(...events.data.data);
+        this.totalEvents = events.data.count;
+        this.eventsDisplayed += 10;
+      }
     } catch {
       return;
     }

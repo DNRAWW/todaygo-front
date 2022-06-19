@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import {
+  ADMIN_PANEL,
   EVENT_CREATE,
   EVENT_EDIT,
   EVENT_LIST,
@@ -19,6 +20,7 @@ import SignUp from "../views/auth/signup/index.vue";
 import PersonView from "../views/person/PersonView/index.vue";
 import PersonEdit from "../views/person/PersonEdit/index.vue";
 import EventEdit from "../views/event/EventEdit/index.vue";
+import AdminPanel from "../views/adminPanel/index.vue";
 
 Vue.use(VueRouter);
 
@@ -67,6 +69,11 @@ const routes: Array<RouteConfig> = [
         path: PROFILE_EDIT,
         name: PROFILE_EDIT,
         component: PersonEdit,
+      },
+      {
+        path: ADMIN_PANEL,
+        name: ADMIN_PANEL,
+        component: AdminPanel,
       },
     ],
   },

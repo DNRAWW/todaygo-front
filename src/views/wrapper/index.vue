@@ -82,6 +82,9 @@
 
             <v-list max-height="200">
               <v-list-item :to="makeProfileLink()" link> Профиль </v-list-item>
+              <v-list-item :to="makeAdminLink()" link v-if="role === 'ADMIN'">
+                Админка
+              </v-list-item>
               <v-list-item @click="logout()" link>Выйти</v-list-item>
             </v-list>
           </v-menu>
