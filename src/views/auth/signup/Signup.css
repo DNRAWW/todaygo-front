@@ -22,3 +22,16 @@
 
   overflow: auto;
 }
+
+@media (max-width: 891px) {
+  .auth-form {
+    width: 80% !important;
+    height: 50vh;
+  }
+}
+
+@media (max-width: 376px) {
+  .auth-form {
+    width: 90% !important;
+  }
+}

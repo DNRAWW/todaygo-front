@@ -14,6 +14,8 @@ export class EventList extends Vue {
   protected selectedDate = "";
   protected searchQuery = "";
   protected apiURL = baseURL;
+  protected isWindowSmall =
+    window.screen.width <= 768 && window.screen.width > 632;
 
   protected displayedEvents = 0;
   protected totalEvents = 0;

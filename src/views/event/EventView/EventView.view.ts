@@ -15,6 +15,7 @@ import { baseURL } from "../../../main";
 @Component({})
 export class EventView extends Vue {
   protected apiURL = baseURL;
+  protected dialog = false;
   protected event: TEvent | null = null;
   protected orgName: string | null = "";
   protected eventId = this.$route.params.id;

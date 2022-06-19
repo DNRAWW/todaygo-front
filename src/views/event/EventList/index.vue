@@ -1,7 +1,7 @@
 <template>
-  <v-container class="px-0 py-6">
+  <div class="px-0 py-6">
     <v-row align="center">
-      <v-col cols="4">
+      <v-col cols="4" class="firstCol">
         <v-row align="center">
           <v-col>
             <v-btn
@@ -38,7 +38,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col align-items="center">
+      <v-col class="d-flex align-center" align-items="center">
         <v-text-field
           v-model="searchQuery"
           placeholder="Поиск..."
@@ -47,15 +47,17 @@
           dense
           hide-details
         ></v-text-field>
+        <v-btn small @click="search(0)"><v-icon>mdi-magnify</v-icon></v-btn>
       </v-col>
-      <v-btn small @click="search(0)"><v-icon>mdi-magnify</v-icon></v-btn>
-      <v-col cols="2" class="d-flex justify-end">
+
+      <v-col lg="2" sm="3" xs="4" class="third-col d-flex justify-end">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
               v-on="on"
               text
+              :small="isWindowSmall"
               class="font-weight-bold text-lg-h6 text-none text-decoration-underline"
             >
               Выбрать дату
@@ -70,18 +72,18 @@
       </v-col>
     </v-row>
 
-    <v-container class="ma-0 px-0 py-10">
+    <div class="ma-0 px-0 py-10">
       <v-card
         class="mb-10"
         elevation="0"
         v-for="(item, index) of events"
         :key="index"
       >
-        <v-row>
-          <v-col cols="6">
+        <v-row class="ma-auto">
+          <v-col lg="6" md="6" sm="12">
             <v-img
               class="ma-0"
-              max-width="700"
+              max-width="900"
               min-width="200"
               min-height="400"
               :src="apiURL + item.attachment.path"
@@ -121,8 +123,31 @@
         class="d-block ma-auto"
         >Загрузить ещё</v-btn
       >
-    </v-container>
-  </v-container>
+    </div>
+  </div>
 </template>
 
-<script src="./EventList.view.ts"></script>
+<script src="./EventList.view.ts" />
+
+<style scoped>
+@media (max-width: 768px) {
+  .firstCol {
+    display: none;
+  }
+}
+@media (max-width: 709px) {
+  .third-col {
+    margin: auto !important;
+    width: 100% !important;
+  }
+  .third-col .v-btn {
+    margin: auto !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .v-img {
+    max-width: 100%;
+  }
+}
+</style>

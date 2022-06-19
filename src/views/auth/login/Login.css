@@ -10,7 +10,7 @@
 
 .auth-form {
   width: 40%;
-  height: 50vh;
+  height: 45vh;
   
   position: absolute !important;
   top:0;
@@ -21,4 +21,16 @@
   margin: auto;
 
   overflow: auto;
+}
+
+@media (max-width: 891px) {
+  .auth-form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 376px) {
+  .auth-form {
+    width: 90%;
+  }
 }
