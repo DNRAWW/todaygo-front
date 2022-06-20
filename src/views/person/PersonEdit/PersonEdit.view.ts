@@ -108,7 +108,7 @@ export class PersonEdit extends Vue {
         const isNameTaken: { data: boolean } = await axios.post(
           `/users/is-visible-name-taken`,
           {
-            name: this.visibleName,
+            name: this.newVisibleName,
           }
         );
 
@@ -123,7 +123,7 @@ export class PersonEdit extends Vue {
         firstName: this.firstName,
         lastName: this.lastName,
         surName: this.surName,
-        visableName: this.visibleName,
+        visableName: this.newVisibleName,
         dateOfBirth: this.dateOfBirth,
       });
 
