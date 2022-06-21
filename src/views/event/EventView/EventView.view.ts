@@ -116,6 +116,7 @@ export class EventView extends Vue {
         comment: {
           id: comment.data,
           person: {
+            id: this.personId,
             visableName: this.visibleName,
           },
           text: this.commentText,
