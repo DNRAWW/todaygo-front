@@ -257,7 +257,7 @@ export class EventView extends Vue {
     return {
       name: PERSON_VIEW,
       params: {
-        id: comment.comment.id,
+        id: comment.comment.person.id,
       },
     };
   }

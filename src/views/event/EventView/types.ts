@@ -11,6 +11,7 @@ export type GetOneOrg = {
 };
 
 export type TCommenter = {
+  id: number;
   visableName: string;
 };
 
