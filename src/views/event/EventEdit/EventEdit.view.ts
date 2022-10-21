@@ -47,8 +47,8 @@ export class EventEdit extends Vue {
   protected descriptionRules = [
     (v: string) =>
       this.isDescriptionEmpty() ||
-      v.length <= 500 ||
-      "Не должено превышать 500 символов",
+      v.length <= 300 ||
+      "Не должено превышать 300 символов",
     (v: string) =>
       this.isDescriptionEmpty() ||
       v.length >= 5 ||

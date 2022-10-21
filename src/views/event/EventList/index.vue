@@ -79,32 +79,31 @@
         v-for="(item, index) of events"
         :key="index"
       >
-        <v-row class="ma-auto">
-          <v-col lg="6" md="6" sm="12">
+        <div class="">
+          <div>
             <v-img
-              class="ma-0"
-              max-width="900"
+              class="ma-0 mx-auto"
+              max-width="80%"
               min-width="200"
               min-height="400"
+              max-height="300"
               :src="apiURL + item.attachment.path"
             ></v-img>
-          </v-col>
-          <v-col>
-            <v-row align="center">
-              <v-col>
+          </div>
+          <div class="d-flex flex-column justify-space-around mt-2">
+            <p class="text-center mb-1">
+              {{ formatedDate(item.date) }} - Длительность:
+              {{ getTimeString(item.duration) }}
+            </p>
+            <div class="d-flex justify-space-between">
+              <div>
                 <h1>{{ item.name }}</h1>
-              </v-col>
-              <v-col class="d-flex justify-center">
-                <p class="ma-0">
-                  Длительность: {{ getTimeString(item.duration) }}
-                </p>
-              </v-col>
-            </v-row>
-            <v-card-text tag="p" class="text-weight-bold pa-0 mt-7">
+              </div>
+            </div>
+            <v-card-text tag="p" class="text-weight-bold pa-0 my-7">
               {{ item.description }}
             </v-card-text>
-            <v-flex class="d-flex justify-space-between mt-16">
-              <p>{{ formatedDate(item.date) }}</p>
+            <v-flex class="d-flex justify-space-between align-end">
               <v-btn
                 :to="makeEventLink(item.id)"
                 style="color: white"
@@ -114,8 +113,8 @@
                 Посмотреть <v-icon>mdi-arrow-right</v-icon>
               </v-btn>
             </v-flex>
-          </v-col>
-        </v-row>
+          </div>
+        </div>
       </v-card>
       <v-btn
         @click="getMore(displayedEvents)"
