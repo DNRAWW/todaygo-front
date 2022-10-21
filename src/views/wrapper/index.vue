@@ -31,31 +31,6 @@
             </template>
 
             <v-list max-height="200">
-              <v-list-item>
-                <v-menu
-                  v-if="currentCity"
-                  offset-y
-                  transition="scroll-y-transition"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="#6100FF" outlined v-bind="attrs" v-on="on">
-                      {{ currentCity.name }}
-                    </v-btn>
-                  </template>
-
-                  <v-list max-height="200">
-                    <v-list-item v-for="(item, index) of cities" :key="index">
-                      <v-btn
-                        @click="setCurrentCity(item)"
-                        color="white"
-                        block
-                        depressed
-                        >{{ item.name }}</v-btn
-                      >
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-list-item>
               <v-list-item v-if="!visibleName">
                 <v-btn
                   :to="makeSignUpLink()"
@@ -107,37 +82,6 @@
                     <v-list-item @click="logout()" link>Выйти</v-list-item>
                   </v-list>
                 </v-menu>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
-          <v-menu
-            class="cities"
-            v-if="currentCity"
-            offset-y
-            transition="scroll-y-transition"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                class="cities ml-8"
-                color="#6100FF"
-                outlined
-                v-bind="attrs"
-                v-on="on"
-              >
-                {{ currentCity.name }}
-              </v-btn>
-            </template>
-
-            <v-list max-height="200">
-              <v-list-item v-for="(item, index) of cities" :key="index">
-                <v-btn
-                  @click="setCurrentCity(item)"
-                  color="white"
-                  block
-                  depressed
-                  >{{ item.name }}</v-btn
-                >
               </v-list-item>
             </v-list>
           </v-menu>

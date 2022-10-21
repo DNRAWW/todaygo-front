@@ -11,10 +11,6 @@ export type TEvent = {
   organizerId: number;
   numberOfParticipants: number;
   price: number;
-  city: {
-    id: number;
-    name: string;
-  };
 };
 
 export type GetAllEventsResponse = {

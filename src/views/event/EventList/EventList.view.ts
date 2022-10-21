@@ -20,13 +20,6 @@ export class EventList extends Vue {
   protected displayedEvents = 0;
   protected totalEvents = 0;
 
-  protected get currentCityId() {
-    return this.$store.getters.currentCityId;
-  }
-  protected get currentCity() {
-    return this.$store.getters.currentCity;
-  }
-
   protected events: TEvent[] = [];
   private async mounted() {
     this.tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
@@ -40,7 +33,7 @@ export class EventList extends Vue {
 
   private async getEvents(skip: number) {
     const events: GetAllEventsResponse = await axios.get(
-      `events/get-all/${this.currentCityId}/${skip}`
+      `events/get-all/${skip}`
     );
     if (skip === 0) {
       this.events = events.data.data;
@@ -63,7 +56,6 @@ export class EventList extends Vue {
           params: {
             date: date,
             skip: skip,
-            cityId: this.currentCityId,
           },
         }
       );
@@ -90,7 +82,6 @@ export class EventList extends Vue {
       params: {
         query: this.searchQuery,
         skip: skip,
-        cityId: this.currentCityId,
       },
     });
 
@@ -144,32 +135,6 @@ export class EventList extends Vue {
         id: id,
       },
     };
-  }
-
-  @Watch("currentCityId")
-  private async newCurrentCityId(newValue: number, oldValue: number) {
-    if (newValue !== oldValue) {
-      await this.getEvents(0);
-    }
-  }
-
-  protected unWatchCurrentCityId!: () => void;
-  private created() {
-    this.unWatchCurrentCityId = this.$store.watch(
-      (state) => state.currentCity,
-      async (newValue, oldValue) => {
-        console.log(newValue);
-        if (newValue !== oldValue) {
-          await this.getEvents(0);
-        }
-      },
-      {
-        deep: true,
-      }
-    );
-  }
-  private destroyed() {
-    this.unWatchCurrentCityId();
   }
 }
 

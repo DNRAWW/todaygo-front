@@ -7,18 +7,6 @@
       <v-card-title v-else class="mb-5">Создание мероприятия</v-card-title>
 
       <v-form v-model="isFormValid" ref="form" class="mx-10">
-        <v-select
-          v-model="cityId"
-          :items="cities"
-          :menu-props="{ maxHeight: '400' }"
-          label="Город"
-          persistent-hint
-          :rules="cityRules"
-          filled
-          dense
-          item-value="id"
-          item-text="name"
-        ></v-select>
         <v-text-field
           label="Название"
           v-model="name"

@@ -1,5 +1,4 @@
 import { EVENT_CREATE } from "@/router/routes";
-import { GetAllCititesResponse, TCity } from "@/views/wrapper/types";
 import axios from "axios";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -19,7 +18,6 @@ export class EventEdit extends Vue {
   protected tags: string[] = [];
   protected time = "";
   protected stringDate = "";
-  protected cityId: number | null = null;
   protected image: File | null = null;
 
   protected dateToString(date: Date) {
@@ -32,8 +30,6 @@ export class EventEdit extends Vue {
   protected get personId() {
     return this.$store.getters.personId;
   }
-
-  protected cities: TCity[] = [];
 
   protected nameRules = [
     (v: string) => !!v || "Поле обязательно для заполнения",
@@ -90,10 +86,6 @@ export class EventEdit extends Vue {
     () => this.tagsLength() || "Поле обязательно для заполнения",
   ];
 
-  protected cityRules = [
-    (v: number) => !!v || "Поле обязательно для заполнения",
-  ];
-
   protected tagsItems = [
     { name: "Образовательное", value: "EDUCATIONAL" },
     { name: "Развлекательное", value: "ENTERTAINMENT" },
@@ -114,16 +106,7 @@ export class EventEdit extends Vue {
     return this.$route.name !== EVENT_CREATE;
   }
 
-  protected async getCities() {
-    const cities: GetAllCititesResponse = await axios.get("cities/get-all");
-
-    this.cities = cities.data;
-
-    return;
-  }
-
   private async mounted() {
-    await this.getCities();
     this.isLoading = true;
     if (this.isEdit) {
       await this.getEvent(parseInt(this.$route.params.id));
@@ -175,7 +158,6 @@ export class EventEdit extends Vue {
           address: this.address,
           date: this.date + "T" + this.time,
           duration: this.timeStringToSeconds(this.duration),
-          cityId: this.cityId,
         });
       } else {
         const image = new FormData();
@@ -202,7 +184,6 @@ export class EventEdit extends Vue {
           address: this.address,
           date: this.date + "T" + this.time,
           duration: this.timeStringToSeconds(this.duration),
-          cityId: this.cityId,
           attachmentId: imageId.data,
         });
       }
@@ -240,7 +221,6 @@ export class EventEdit extends Vue {
       address: this.address,
       date: this.date + "T" + this.time,
       duration: this.timeStringToSeconds(this.duration),
-      cityId: this.cityId,
       attachmentId: imageId.data,
     });
 
@@ -278,7 +258,6 @@ export class EventEdit extends Vue {
         this.maxNumberOfParticipants = event.data.maxNumberOfParticipants;
         this.tags = event.data.tags;
         this.dateToString(new Date(event.data.date));
-        this.cityId = event.data.city.id;
       }
     } catch {
       window.location.href = `/person/${this.personId}`;

@@ -46,9 +46,7 @@
         </v-btn>
       </v-flex>
 
-      <v-card-title class="pr-1"
-        >{{ event.name }} - {{ event.city.name }}</v-card-title
-      >
+      <v-card-title class="pr-1">{{ event.name }}</v-card-title>
 
       <v-row class="mt-5">
         <v-col class="pt-0">
