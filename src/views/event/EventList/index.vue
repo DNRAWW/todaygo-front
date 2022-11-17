@@ -91,7 +91,7 @@
             ></v-img>
           </div>
           <div class="d-flex flex-column justify-space-around mt-2">
-            <p class="text-center mb-1">
+            <p class="font-weight-bold text-center mb-1">
               {{ formatedDate(item.date) }} - Длительность:
               {{ getTimeString(item.duration) }}
             </p>
